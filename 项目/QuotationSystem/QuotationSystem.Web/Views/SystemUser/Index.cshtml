@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@section styles{
+  
+}
+
+<div style="padding:10px">
+    <div id="toolbar" style="height:40px;">
+        <input id="search" class="easyui-searchbox" data-options="searcher:searchInfo,prompt:'请输入搜索内容',menu:'#searchMenu',width:300,height:30" />
+        <div id="searchMenu">
+            <div data-options="name:'id'">搜索账号</div>
+            <div data-options="name:'name'">搜索姓名</div>
+            <div data-options="name:'active'">搜索状态</div>
+            <div data-options="name:'company'">搜索公司</div>
+            <div data-options="name:'tel'">搜索电话</div>
+        </div>
+
+        @MvcHtmlString.Create(ViewBag.duties)
+    </div>
+    <table id="userList" class="easyui-datagrid"></table>
+    <div id="modalwindow" class="easyui-window" data-options="closed:true,minimizable:false"></div>
+</div>
+
+@section scripts{
+    <script src="~/MyScripts/sysuserIndex.js"></script>
+}

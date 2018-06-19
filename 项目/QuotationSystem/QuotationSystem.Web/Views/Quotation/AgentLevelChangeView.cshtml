@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "AgentLevelChange";
+}
+
+@section styles{
+    <style>
+        label {
+            font-size: 15px;
+            font-weight: bold;
+        }
+    </style>
+}
+<div style="padding:10px;">
+    <div id="toolbar" style="height:40px;">
+
+        @if (ViewBag.duties.Length != 0)
+        {
+            <span class="datagrid-btn-separator" style="float:none;margin-left:5px;margin-right:5px"></span>
+            <a id="Reset" class="l-btn clearBg" style="padding: 5px 8px;"><span class="fa fa-reply" style="font-size:14px"></span><span style="font-size:12px">&nbsp;撤销修改</span></a>
+            <span class="datagrid-btn-separator" style="float:none;margin-left:5px;margin-right:5px"></span>
+            <a id="Create" class="l-btn clearBg" style="padding: 5px 8px;"><span class="fa fa-plus" style="font-size:14px"></span><span style="font-size:12px">&nbsp;添加</span></a>
+            <span class="datagrid-btn-separator" style="float:none;margin-left:5px;margin-right:5px"></span>
+            <a id="Delete" class="l-btn clearBg" style="padding: 5px 8px;"><span class="fa fa-trash" style="font-size:14px"></span><span style="font-size:12px">&nbsp;删除</span></a>
+        }
+        @MvcHtmlString.Create(ViewBag.duties)
+    </div>
+    <table id="ruleList" class="easyui-datagrid"></table>
+</div>
+
+@section scripts{
+    <script src="~/MyScripts/agentLevelChange.js"></script>
+}

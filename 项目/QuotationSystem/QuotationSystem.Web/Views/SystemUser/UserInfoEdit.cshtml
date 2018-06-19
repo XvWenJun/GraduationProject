@@ -1,0 +1,172 @@
+﻿@model QuotationSystem.DAL.Models.User
+
+@{
+    ViewBag.Title = "UserInfoEdit";
+    string imageScr = Model.avatarPath ?? "/Content/images/nopic.gif";
+}
+
+@section styles{
+    <style>
+        .formtable th {
+            height: 40px;
+        }
+
+        .formtable tr {
+            height: 25px;
+        }
+
+        .input {
+            height: 30px !important;
+            padding: 5px !important;
+            font-size: 13px !important;
+        }
+    </style>
+    <link href="~/Scripts/webuploader/webuploader.css" rel="stylesheet" />
+}
+
+<div style="width:620px;padding:30px;">
+    <form>
+
+        <input id="id" name="id" type="hidden" value="@Model.id" />
+        <input id="active" name="active" type="hidden" value="@Model.active" />
+        <input id="type" type="hidden" value="@ViewBag.type" />
+        <input id="isNotAdd" type="hidden" value="@ViewBag.isAdd" />
+        <input id="self" type="hidden" value="@ViewBag.self" />
+        @if (!ViewBag.self)
+        {
+            <table class="formtable">
+                <tbody>
+                    <tr>
+                        <td colspan="6">
+                            <div class="custom-panel" style="margin-bottom:10px;">
+                                <label class="fa fa-user-circle-o fa-lg custom-panel-icon"></label>
+                                <span class="custom-panel-title">账户信息</span>
+
+                                <a id="btnSave" style="float: right; padding: 5px;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="fa fa-save" style="font-size:14px"></span>&nbsp;<span style="font-size:12px">保存</span></span></a>
+                            </div>
+                        </td>
+                    </tr>
+                    @if (!ViewBag.create)
+                    {
+                        <tr>
+                            <th style="font-size:16px;">
+                                账户：
+                            </th>
+                            <td>
+                                @Model.id
+                            </td>
+                            <th style="width:110px; font-size:16px;">
+                                密码：
+                            </th>
+                            <td>
+                                <a id="resetPwd" href="javascript:void(0)" class="easyui-linkbutton l-btn" style="height:27px;" data-options="iconCls:'fa fa-key'"><span>重置密码</span></a>
+                            </td>
+                            <th>
+                                &nbsp;
+                            </th>
+                            <td>
+                                &nbsp;
+                            </td>
+                        </tr>
+                    }
+
+                    <tr>
+                        <th style="font-size:16px;">身份：</th>
+                        <td>
+                            <input id="level" type="hidden" value="@Model.level" />
+                            <select id="levelVal" name="level" class="input" style="width:102px;height:25px;">  
+                            </select>
+                        </td>
+                        <th style="font-size:16px;">
+                            状态：
+                        </th>
+                        <td style="text-align:left">
+                            <input id="switchbutton" class="easyui-switchbutton" data-options="onText:'启用',offText:'禁用'" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+        }
+        else
+        {
+            <input id="level" name="level" type="hidden" value="@Model.level" />
+        }
+
+        <table class="formtable">
+            <tbody>
+                <tr>
+                    <td colspan="6">
+                        <div class="custom-panel" style="margin-bottom:10px;">
+                            <label class="fa fa-user-o fa-lg custom-panel-icon"></label>
+                            <span class="custom-panel-title">基本信息</span>
+                            @if (ViewBag.self)
+                            {
+                                <input type="hidden" id="updateName" value="update" />
+                                <a id="btnSave" style="float: right;padding: 5px;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="fa fa-save" style="font-size:14px"></span>&nbsp;<span style="font-size:12px">保存</span></span></a>
+                            }
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="font-size:16px;">
+                        名字：
+                    </th>
+                    <td style="width:80px;">
+                        <input type="text" id="name" name="name" value="@Model.name" class="input" style="width:80px;" />
+                    </td>
+
+                    <th style="font-size:16px;">
+                        电话：
+                    </th>
+                    <td>
+                        <input type="text" id="tel" name="tel" value="@Model.tel" class="input" style="width:146px;" />
+                    </td>
+
+                    <td rowspan="4" style="border-left:dashed 1px #ccc; text-align:center">
+                        <div>
+                            <img style="cursor:pointer; width:140px; height:140px;" class="img-thumbnail" id="avatar" src="@imageScr">
+                            <br /><br />
+                            <span id="picker" style="font-size:15px !important">点击更换头像</span>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th style="font-size:16px;">
+                        公司：
+                    </th>
+                    <td colspan="4">
+                        <input type="text" id="company" name="company" value="@Model.company" class="input" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <th style="font-size:16px;">
+                        所在地：
+                    </th>
+                    <td colspan="4">
+                        <select id="province" name="province" class="input" style="width:90px"><option>@Model.province</option></select>
+
+                        <select id="city" class="input" name="city" style="width:90px"><option>@Model.city</option></select>
+
+                        <select id="region" class="input" name="region" style="width:93px"><option>@Model.region</option></select>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="font-size:16px;">
+                        详细地址：
+                    </th>
+                    <td colspan="4">
+                        <input type="text" id="area" name="area" value="@Model.area" class="input" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+@section scripts{
+    <script src="~/Scripts/webuploader/webuploader.html5only.js"></script>
+    <script src="~/MyScripts/uploadOperator.js"></script>
+    <script src="~/MyScripts/sysuserEdit.js"></script>
+}

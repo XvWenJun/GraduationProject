@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "FileUpload";
+}
+
+@section styles{
+    <style>
+        .excelwindow tr {
+            height: 25px;
+        }
+
+        .excelwindow td {
+            padding: 5px;
+            padding-left: 10px;
+        }
+    </style>
+    <link href="~/Scripts/webuploader/webuploader.css" rel="stylesheet" />
+}
+
+<div id="excelwindow" style="width: 600px;">
+    <input id="id" type="hidden" value="@ViewBag.id" />
+    <table style="border:1px solid;width:95%;margin:10px auto;">
+        <tbody class="text-info excelwindow">
+            <tr>
+                <td>使用说明：</td>
+            </tr>
+            <tr>
+                <td>1，先依照需要导出一个模版</td>
+            </tr>
+            <tr>
+                <td>2，在导出的模版中填入产品信息</td>
+            </tr>
+            <tr>
+                <td>3，选择填写好信息的模版，开始导入</td>
+            </tr>
+        </tbody>
+    </table>
+    <table style="border:1px solid;width:95%;margin:10px auto;font-size:15px;">
+        <tbody class="excelwindow">
+            <tr>
+                <td>
+                    1，选择模版:
+                    <a id="btnSimple" class="btn  btn-link" href="~/Export/价格按基础自增模版.xlsx" download><span>&nbsp;价格按基础自增模版</span></a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    2，导入文件:&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span id="fileUpload">上传文件</span>
+                </td>
+            </tr>
+            <tr>
+                <td><span id="msg" style="padding-left: 24px;font-size: 12px;"></span></td>
+            </tr>
+            <tr>
+                <td class="text-right"> <button id="btnOk" class="btn btn-success btn-sm">确定</button> &nbsp;&nbsp; <button id="btnCancel" class="btn btn-default btn-sm">关闭</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/webuploader/webuploader.html5only.js"></script>
+    <script src="~/MyScripts/uploadOperator.js"></script>
+    <script src="~/MyScripts/fileUpload.js"></script>
+}

@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@section styles{
+    <style>
+    </style>
+}
+
+<div style="padding:10px;">
+    <div style="height:40px; ">
+        @MvcHtmlString.Create(ViewBag.duties)
+    </div>
+
+    <table style="width:100%;">
+        <tbody>
+            <tr>
+                <td style="width:300px; vertical-align:top">
+                    <table id="levelList" class="easyui-datagrid"></table>
+                </td>
+                <td style="width:20px;"></td>
+                <td style="width:300px; vertical-align:top;">
+                    <table id="rightList" class="easyui-datagrid"></table>
+                </td>
+
+                <td style="width:20px;"></td>
+                <td style="vertical-align:top;">
+                    <table id="dutyList" class="easyui-datagrid"></table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+@section scripts{
+    <script src="~/MyScripts/sysRightIndex.js"></script>
+}

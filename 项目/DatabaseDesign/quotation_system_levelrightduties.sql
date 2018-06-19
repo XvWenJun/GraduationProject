@@ -1,0 +1,52 @@
+-- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+--
+-- Host: 127.0.0.1    Database: quotation_system
+-- ------------------------------------------------------
+-- Server version	8.0.3-rc-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `levelrightduties`
+--
+
+DROP TABLE IF EXISTS `levelrightduties`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `levelrightduties` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `level` int(11) DEFAULT NULL,
+  `dutyId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=608 DEFAULT CHARSET=gb2312;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `levelrightduties`
+--
+
+LOCK TABLES `levelrightduties` WRITE;
+/*!40000 ALTER TABLE `levelrightduties` DISABLE KEYS */;
+INSERT INTO `levelrightduties` VALUES (487,2,1),(488,2,2),(489,2,3),(490,2,4),(491,2,5),(492,2,6),(493,2,7),(494,2,8),(495,2,9),(496,2,10),(497,2,11),(498,2,12),(499,2,13),(500,2,14),(501,2,18),(502,2,19),(503,2,20),(504,2,21),(505,2,22),(506,2,24),(507,2,25),(508,2,26),(509,2,27),(510,2,28),(511,3,1),(512,3,2),(513,3,3),(514,3,4),(515,3,5),(516,3,6),(517,3,7),(518,3,8),(519,3,9),(520,3,10),(521,3,11),(522,3,12),(523,3,13),(524,3,14),(528,3,21),(546,4,12),(549,4,18),(550,4,19),(551,4,20),(552,4,21),(565,5,7),(570,5,12),(573,5,18),(574,5,19),(575,5,20),(576,5,21),(589,6,7),(594,6,12),(597,6,18),(598,6,19),(599,6,20),(600,6,21),(607,4,7);
+/*!40000 ALTER TABLE `levelrightduties` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-04-18 15:51:04

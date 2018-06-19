@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.Title = "ProductPriceSetting";
+}
+
+@section styles{
+    <style>
+        .formtable th {
+            height: 40px;
+        }
+
+        .formtable tr {
+            height: 25px;
+        }
+
+        .input {
+            height: 30px !important;
+            padding: 5px !important;
+            font-size: 13px !important;
+        }
+    </style>
+}
+
+<div style="padding:10px;width:450px;">
+    <input type="hidden" id="enable" value="@ViewBag.enable" />
+    <table class="formtable">
+        <tbody>
+            <tr>
+                <td colspan="4">
+                    <div class="custom-panel" style="margin-bottom:10px;">
+                        <label class="fa fa-user-circle-o fa-lg custom-panel-icon"></label>
+                        <span class="custom-panel-title">产品售价信息</span>
+                        <div  style="float: right; padding: 5px;">
+                            <a id="btnSave"  class="l-btn l-btn-plain"><span class="l-btn-left"><span class="fa fa-save" style="font-size:14px"></span>&nbsp;<span style="font-size:12px">保存</span></span></a>
+                        </div>
+                       
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <th style="font-size:14px;">预售价数量：</th>
+                <td>
+                    <input id="count" type="text" class="easyui-numberbox input" value="@ViewBag.count" style="width:120px;height:24px;" data-options="min:1,max:10">
+                </td>
+
+                <th style="font-size:15px;">售价自增：</th>
+                <td>
+                    <input id="enablebtn" class="easyui-switchbutton" data-options="onText:'启用',offText:'禁用'" style="height:24px;" />
+                </td>
+            </tr>
+
+            <tr>
+
+                <th style="font-size:15px;visibility:visible" class="autoAdd">
+                    <span>自增比例：</span>
+                </th>
+                <td style="text-align:left;visibility:visible" class="autoAdd" colspan="3">
+                    <input id="value" type="text" class="easyui-numberbox input" style="width:120px;height:24px;" value="@ViewBag.value" data-options="min:0,max:100, precision:2,suffix:'%'">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            var enable = !!$("#enable").val();
+            showOrHidden(enable);
+
+            $("#enablebtn").switchbutton({
+                checked: enable,
+                onChange: function (checked) {
+                    showOrHidden(checked)
+                }
+            });
+
+            $("#btnSave").click(function () {
+                if (numberboxEmptyFocus("#count"))
+                    return
+
+                var checked = $("#enablebtn").switchbutton('options').checked;
+                if (checked) {
+                    if (numberboxEmptyFocus("#value"))
+                        return
+                }
+
+                $.post("/SystemProduct/EditPriceSettings", { count: $("#count").val(), enable: $("#enablebtn").switchbutton('options').checked, value: $("#value").val() }, function (data) {
+                    if (data.result) {
+                        showTip("修改成功！", 2000);
+                    }
+                    else {
+                        showTip("修改失败，请重试！", 2000);
+                    }
+
+                })
+            })
+
+            $("input.easyui-numberbox").numberbox({
+                onChange: function (newValue, oldValue) {
+                    if (newValue.trim() != "")
+                        $(this).next('span').removeClass("input-validation-error").find('input').css("background-color", "#fff");
+                }
+            })
+
+            clearErrState(":input")
+            function showOrHidden(state) {
+                $(".autoAdd").css("visibility", state ? 'visible' : 'hidden')
+            }
+
+            function numberboxEmptyFocus(name) {
+                var value = $(name).val();
+                if (value.trim() == "" || value == 0) {
+                    $(name).numberbox('clear');
+                    $(name).next('span').addClass("input-validation-error").find('input').css("background-color", "#fee").focus();
+                    return true;
+                }
+                return false;
+            }
+        })
+    </script>
+}

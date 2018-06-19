@@ -1,0 +1,123 @@
+﻿@model QuotationSystem.Web.ViewModels.UserView
+@{
+    ViewBag.Title = "报价管理系统";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/themes/base/easyui.css" rel="stylesheet" />
+    <link href="~/Content/themes/skin-coolblack.css" rel="stylesheet" />
+    <link href="~/Content/fontawesome/css/font-awesome.min.css" rel="stylesheet" />
+    <style>
+        .popovermenu {
+            z-index: 1000;
+            display: block;
+            min-width: 160px;
+            font-size: 14px;
+            list-style: none;
+            background-color: #ffffff;
+            background-clip: padding-box;
+            color: #000000;
+        }
+
+            .popovermenu .divider {
+                height: 1px;
+                overflow: hidden;
+                background-color: #e5e5e5;
+            }
+
+            .popovermenu > li > a {
+                display: block;
+                padding: 5px 10px;
+                clear: both;
+                font-weight: 400;
+                line-height: 1.42857143;
+                color: #333;
+                white-space: nowrap;
+            }
+
+                .popovermenu > li > a:hover {
+                    background-color: #cdcaca;
+                }
+
+        .notice {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #06c8f7;
+            border-radius: 50%;
+            padding: 4px;
+            display: none;
+        }
+    </style>
+</head>
+<body class="easyui-layout" id="easyLayout">
+
+    <input id="receiver" type="hidden" value="@ViewBag.receiver" />
+    <div id="north" data-options="region:'north',border:false,split:false" style="height:54px;padding:0;margin:0;overflow:hidden">
+        <table class="banner" style="border-spacing:0px; height:54px;">
+            <tr>
+                <td class="webname">
+                    报价管理系统
+                </td>
+
+                <td></td>
+
+                <td style="width: 40px;">
+                    <a id="notice" title="消息" class="l-btn-text fa fa-bell-o  fa-lg bannerbtn" href="#" style="position:relative;"><span class="notice"></span> </a>
+                </td>
+                <td style="width:160px; overflow:hidden; ">
+                    <button id="Popover" class="btn btn-default" data-toggle="popover" data-placement="bottom" data-container="body" data-html="true" data-content='<ul class="popovermenu"><li><a href="javascript:getUserInfoPage();" class="fa fa-id-badge">&nbsp;&nbsp;资料</a></li><li  class="divider"></li><li><a href="javascript:logOut();" class="fa fa-sign-out">&nbsp;退出</a></li></ul>'>
+                        <span class="fa fa-user"></span>&nbsp; <span id="userName">@Model.name</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="fa  fa-caret-down"></span>
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    @*左侧子菜单*@
+    <div id="west" data-options="region:'west',split:true,title:'导航条',collapsible:false" style="width: 220px; height: 100%;  overflow: auto; border-bottom:0px;">
+        <div id="RightAccordion" class="easyui-accordion accordion accordion-noborder easyui-fluid"></div>
+    </div>
+
+    @*标签页*@
+    <div id="center" data-options="region:'center',border:false">
+        <div id="mainTab" class="easyui-tabs" data-options="fit:true">
+        </div>
+    </div>
+
+    @*tab_menu菜单*@
+    <div id="tab_menu" class="easyui-menu" style="width: 150px;">
+        <div id="tab_menu-tabrefresh" data-options="iconCls:'icon-reload'">
+            刷新
+        </div>
+        <div id="tab_menu-tabclose">
+            关闭
+        </div>
+        <div id="tab_menu-tabcloseall">
+            关闭所有
+        </div>
+        <div id="tab_menu-tabcloseother">
+            关闭其他标签页
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryfrom")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/easyui/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/easyui/jquery.easyui.plus.js"></script>
+    <script src="~/Scripts/easyui/easyui-lang-zh-CN.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.1.2.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/MyScripts/common.js"></script>
+    <script src="~/MyScripts/home.js"></script>
+</body>
+</html>

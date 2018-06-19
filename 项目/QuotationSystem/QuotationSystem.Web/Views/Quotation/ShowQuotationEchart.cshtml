@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "ShowQuotationEchart";
+}
+
+@section styles{
+
+}
+<input id="agentId" type="hidden" value="@ViewBag.agentId" />
+<div style="padding:10px;">
+    <div id="echart" style="width:100%; height:300px;border:1px solid #D3D3D3"></div>
+    <div id="toolbar" style="height:40px; margin-top:10px">
+        <select id="date" class="easyui-combobox" style="width:150px;height:28px !important;"></select>
+
+        <span class="datagrid-btn-separator" style="float:none"></span>
+        <a id="btnDetails" class="l-btn clearBg" style="padding: 5px 8px;"><span class="fa fa-list" style="font-size:14px"></span><span style="font-size:12px">&nbsp;详情</span></a>
+        <span class="datagrid-btn-separator" style="float:none"></span>
+    </div>
+
+    <table id="orderList" class="easyui-datagrid"></table>
+</div>
+<div id="modalwindow" class="easyui-window" data-options="closed:true,minimizable:false"></div>
+@section scripts{
+    <script src="~/Scripts/echart/echarts.common.min.js"></script>
+    <script src="~/MyScripts/showQuotaionEchar.js"></script>
+}

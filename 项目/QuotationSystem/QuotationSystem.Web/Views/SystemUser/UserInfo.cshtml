@@ -1,0 +1,170 @@
+﻿@model QuotationSystem.DAL.Models.User
+@{
+
+    ViewBag.Title = "用户资料";
+    string imageSrc = Model.avatarPath ?? "/Content/images/nopic.gif";
+}
+
+@section styles{
+    <style>
+        .formtable th {
+            height: 40px;
+        }
+
+        .formtable tr {
+            height: 25px;
+        }
+    </style>
+}
+
+<div style="width:620px;padding:30px;">
+
+    <table class="formtable">
+        <tbody>
+            <tr>
+                <td colspan="6">
+                    <div class="custom-panel" style="margin-bottom:10px;">
+                        <label class="fa fa-user-circle-o fa-lg custom-panel-icon"></label>
+                        <span class="custom-panel-title">账户信息</span>
+                        @if (!ViewBag.readOnly)
+                        {
+                            <a id="btnEdit" style="float: right;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="fa fa-pencil" style="font-size:14px"></span>&nbsp;<span style="font-size:12px">修改信息</span></span></a>
+                        }
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    账户：
+                </th>
+                <td>
+                    @Model.id
+                </td>
+                <th style="width:150px;">
+                    密码：
+                </th>
+                <td>
+                    @if (ViewBag.readOnly)
+                    {
+                        @:******
+                    }
+                    else
+                    {
+                        <a id="editPwd" href="javascript:void(0)" class="easyui-linkbutton l-btn" style="height:25px;" data-options="iconCls:'fa fa-key'"><span>修改密码</span></a>
+                    }
+                </td>
+                <th>
+                    &nbsp;
+                </th>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <th>身份：</th>
+                <td>
+                    @ViewBag.levelText
+                </td>
+                <th>
+                    状态：
+                </th>
+                <td style="text-align:left">
+                    @if (Model.active == "启用")
+                    {
+                        <span class="label label-success">启用</span>
+                    }
+                    else
+                    {
+                        <span class="label label-error">禁用</span>
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br />
+    <table class="formtable">
+        <tbody>
+            <tr>
+                <td colspan="6">
+                    <div class="custom-panel" style="margin-bottom:10px;">
+                        <label class="fa fa-user-o fa-lg custom-panel-icon"></label>
+                        <span class="custom-panel-title">基本信息</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    名字：
+                </th>
+                <td>
+                    @Model.name
+                </td>
+                <th>
+                    公司：
+                </th>
+                <td>
+                    @Model.company
+                </td>
+
+                <td rowspan="3" style="border-left:dashed 1px #ccc; text-align:center">
+
+                    <img style="cursor:pointer; width:140px; height:140px;" class="img-thumbnail" src="@imageSrc">
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    电话：
+                </th>
+                <td colspan="3">
+                    @Model.tel
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    所在地：
+                </th>
+                <td colspan="3">
+                    @Model.province- @Model.city - @Model.region
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    详细地址：
+                </th>
+                <td colspan="3">
+                    @Model.area
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="editPwdWindow" class="easyui-window" title="修改密码" style="width:290px;height:200px;" data-options="iconCls:'fa fa-pencil',closed:true,modal:true,collapsible:false,minimizable:false,maximizable:false,resizable:false">
+
+    <table class="formtable" style="width: 80%; text-align: right;margin-top: 10px ;margin-left: 10px;">
+        <tbody>
+            <tr>
+                <td>旧密码：</td>
+                <td><input id="oldPwd" type="password" /></td>
+            </tr>
+            <tr>
+                <td>新密码：</td>
+                <td><input id="newPwd1" type="password" /></td>
+            </tr>
+            <tr>
+                <td>确认密码：</td>
+                <td><input id="newPwd2" type="password" /></td>
+            </tr>
+            <tr style="height:40px;"><td colspan="2"><div id="errMsg" class="text-center"></div></td></tr>
+        </tbody>
+    </table>
+    <div style="float:right;padding-right:20px;">
+        <button class="fa fa-save btn btn-default" id="save">&nbsp; 保存</button>&nbsp;&nbsp;&nbsp;<button class="fa fa-close btn btn-danger" id="close">&nbsp; 关闭</button>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/MyScripts/sysuser.js"></script>
+}

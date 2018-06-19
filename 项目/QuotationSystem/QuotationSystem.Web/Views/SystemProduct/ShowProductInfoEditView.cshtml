@@ -1,0 +1,152 @@
+﻿@model QuotationSystem.DAL.Common.ProductFullInfo
+@{
+    ViewBag.Title = "ShowProductInfoView";
+    string imageScr = Model.product.img ?? @"/Content/images/nopic.gif";
+}
+
+@section styles{
+    <style>
+        .formtable th {
+            height: 40px;
+        }
+
+        .formtable tr {
+            height: 25px;
+        }
+
+        .input {
+            height: 24px !important;
+            padding: 5px !important;
+            font-size: 12px !important;
+        }
+    </style>
+    <link href="~/Scripts/webuploader/webuploader.css" rel="stylesheet" />
+}
+
+<div style="width:700px;padding:30px;">
+    <form>
+
+        <input id="id" name="id" type="hidden" value="@Model.product.id" />
+        <input id="category" type="hidden" value="@Model.product.category" />
+        <input id="isNotAdd" type="hidden" value="@ViewBag.isAdd" />
+        <input id="priceCount" type="hidden" value="@Model.prices.Length" />
+        <table class="formtable">
+            <tbody>
+                <tr>
+                    <td colspan="6">
+                        <div class="custom-panel" style="margin-bottom:10px;">
+                            <label class="fa fa-cube fa-lg custom-panel-icon"></label>
+                            <span class="custom-panel-title">产品基本信息</span>
+
+                            <a id="btnSave" style="float: right; padding: 5px;" class="l-btn l-btn-plain"><span class="l-btn-left"><span class="fa fa-save" style="font-size:14px"></span>&nbsp;<span style="font-size:12px">保存</span></span></a>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th style="font-size:15px;">
+                        产品名字：
+                    </th>
+                    <td>
+                        <input type="text" id="name" name="name" class="input" value="@Model.product.name" style="width:100px;" />
+                    </td>
+                    <th style="width:110px; font-size:16px;">
+                        产品类别：
+                    </th>
+                    <td>
+                        <select id="combotree" name="category" class="easyui-combotree input" style="width:150px;height:26px !important;"></select>
+                    </td>
+                    <th>
+                        &nbsp;
+                    </th>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+
+                <tr>
+                    <th style="font-size:15px;">售价自增：</th>
+                    <td>
+                        <input id="switchbutton" class="easyui-switchbutton" data-options="onText:'启用',offText:'禁用'" style="height:24px;" />
+                    </td>
+                    <th style="font-size:15px;visibility:hidden" class="autoAdd">
+                        <span>自增比例：</span>
+                    </th>
+                    <td style="text-align:left;visibility:hidden" class="autoAdd">
+                        <input id="autoAdd" type="text" class="easyui-numberbox input" style="width:150px;height:24px;" value="100" data-options="min:0,max:100, precision:2,suffix:'%'">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+
+        <table class="formtable">
+            <tbody>
+                <tr>
+                    <td colspan="7">
+                        <div class="custom-panel" style="margin-bottom:10px;">
+                            <label class="fa fa-cubes fa-lg custom-panel-icon"></label>
+                            <span class="custom-panel-title">产品详细信息</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="font-size:12px;">
+                        单位：
+                    </th>
+                    <td>
+                        <input type="text" id="unit" name="unit" class="input" style="width:80px;" value="@Model.product.unit" />
+                    </td>
+
+                    <th style="font-size:12px;">
+                        成本：
+                    </th>
+                    <td colspan="3">
+                        <input type="text" id="cost" name="cost" class="easyui-numberbox input" style="width:80px;height:24px" value="@Model.product.cost" data-options="min:0, precision:2,suffix:'￥'">
+                    </td>
+
+                    <td rowspan="4" style="border-left:dashed 1px #ccc; text-align:center">
+                        <div>
+                            <img style="cursor:pointer; width:140px; height:140px;" class="img-thumbnail" id="avatar" name="img" src="@imageScr">
+                            <br /><br />
+                            <span id="picker">点击上传图片</span>
+                        </div>
+                    </td>
+                </tr>
+
+                @for (int i = 0; i < Math.Ceiling((double)Model.prices.Length / 3); i++)
+                {
+                    <tr>
+                        @for (int j = 0; j < 3; j++)
+                        {
+                            if (i * 3 + j >= Model.prices.Length)
+                            {
+                                break;
+                            }
+                            <th style="font-size:12px;">
+                                @(i * 3 + j + 1)级售价：
+                            </th>
+                            <td>
+                                <input type="text" class="easyui-numberbox input" style="width:80px;height:24px" name="price@(i*3+j+1)" id="price@(i*3+j+1)" value="@Model.prices[i*3+j]" data-options="min:0, precision:2,suffix:'￥'">
+                            </td>
+                        }
+                    </tr>
+
+                }
+                <tr>
+                    <th style="font-size:12px;">
+                        详细信息：
+                    </th>
+                    <td colspan="6">
+                        <textarea id="describe" name="describe" rows="2" cols="58" style="height:60px;font-size:12px;">@Model.product.describe</textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+@section scripts{
+    <script src="~/Scripts/webuploader/webuploader.html5only.js"></script>
+    <script src="~/MyScripts/uploadOperator.js"></script>
+    <script src="~/MyScripts/sysproductEdit.js"></script>
+}

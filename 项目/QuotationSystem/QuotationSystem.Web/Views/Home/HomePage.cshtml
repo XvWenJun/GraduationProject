@@ -1,0 +1,250 @@
+﻿@{
+    ViewBag.Title = "HomePage";
+}
+
+@section styles{
+    <style>
+        .card {
+            border-radius: 6px;
+            box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
+            background-color: #FFFFFF;
+            color: #FFFFFF;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+            .card .content {
+                padding: 15px;
+            }
+
+            .card .icon-big {
+                font-size: 4em;
+                min-height: 64px;
+            }
+
+            .card .numbers {
+                font-size: 2em;
+                text-align: right;
+            }
+
+            .card .stats {
+                font-weight: 400;
+                font-size: 1.2em;
+            }
+
+        hr {
+            margin-bottom: 8px;
+            margin-top: 8px;
+        }
+
+        .list-group li {
+            border: 0px;
+            padding: 10px 5px;
+        }
+
+        .list-group a {
+            cursor: pointer;
+            color: black;
+        }
+
+        .list-group span {
+            float: right;
+        }
+    </style>
+}
+<input type="hidden" id="agentId" value="@ViewBag.agentId" />
+<div style="padding:10px 30px;">
+    @if (ViewBag.agentId == 0)
+    {
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card" style="background-color:#65a6ff;">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big text-center">
+                                    <i class="fa fa-database"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>总数</p>
+                                    <span id="orderPassTotalCount"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr>
+                            <div class="stats">
+                                本月成交订单总数
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card" style="background-color:#41e5c0">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big  text-center">
+                                    <i class="fa fa-bar-chart"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>总额</p>
+                                    ￥<span id="priceTotal"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr>
+                            <div class="stats">
+                                本月销售总额
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card" style="background-color:#51e47f;">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big  text-center">
+                                    <i class="fa fa-money"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>总额</p>
+                                    ￥<span id="profitTotal"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr>
+                            <div class="stats">
+                                本月利润总额
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card" style="background-color:#65a6ff;">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big text-center">
+                                    <i class="fa fa-database"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>总数</p>
+                                    <span id="orderTotal"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr>
+                            <div class="stats">
+                                本月提交订单总数
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card" style="background-color:#f55e5e">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big  text-center">
+                                    <i class="fa fa-thumbs-up"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>总数</p>
+                                    <span id="orderPassTotalCount"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr>
+                            <div class="stats">
+                                本月过审订单总数
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card" style="background-color:#41e5c0">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big  text-center">
+                                    <i class="fa fa-bar-chart"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>总额</p>
+                                    ￥<span id="priceTotal"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr>
+                            <div class="stats">
+                                本月销售总额
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+    <div class="row">
+
+        <div class="col-lg-5">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color:transparent">
+                    <div class="panel-title">
+                        <span class="fa fa-pie-chart"></span>&nbsp;&nbsp;数据统计
+                    </div>
+                </div>
+                <div id="echart1" class="panel-body-noborder" style="height:400px;padding:10px;">
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="background-color:transparent">
+                    <div class="panel-title">
+                        <span class="fa fa-bullhorn"></span>&nbsp;&nbsp;数据比较
+                    </div>
+                </div>
+                <div id="echart2" class="panel-body-noborder" style="height:400px;padding:10px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section scripts{
+        <script src="~/Scripts/echart/echarts.common.min.js"></script>
+        <script src="~/MyScripts/homePage.js"></script>
+
+    }

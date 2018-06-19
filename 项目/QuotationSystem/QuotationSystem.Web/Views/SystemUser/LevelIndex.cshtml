@@ -1,0 +1,229 @@
+﻿@{
+    ViewBag.Title = "LevelIndex";
+}
+@section styles{
+
+    <style>
+        tr {
+            height: 40px;
+        }
+    </style>
+}
+
+<div style="padding:10px">
+    <div id="toolbar" style="height:40px;">
+        <input id="search" class="easyui-searchbox" data-options="searcher:searchInfo,prompt:'请输入搜索内容',menu:'#searchMenu',width:300,height:30" />
+        <div id="searchMenu">
+            <div data-options="name:'id'">搜索编号</div>
+            <div data-options="name:'name'">搜索名称</div>
+        </div>
+        @MvcHtmlString.Create(ViewBag.duties)
+    </div>
+    <table id="levelList" class="easyui-datagrid"></table>
+    <div id="modalwindow" class="easyui-window" data-options="closed:true,modal:true,collapsible:false,minimizable:false,maximizable:false,resizable:false">
+        <div style="height:240px;width:435px; padding:10px;">
+            <input type="hidden" id="id" />
+            <table>
+                <tr>
+                    <td>角色名称：</td>
+                    <td width="120px"><input type="text" id="name" name="name" style="width:100px;height: 25px; font-size:12px;" /></td>
+                    <td>角色属性：</td>
+                    <td>
+                        <select id="self" name="self" style="width:100px;height: 25px; font-size:12px; padding:0px;">
+                            <option value="true">内部角色</option>
+                            <option value="false">外部角色</option>
+                        </select>
+                    </td>
+
+                   
+                </tr>
+                <tr class="autoAdd">
+                    <td >对应预售价：</td>
+                    <td >
+                        <select id="price" name="price" style="width:100px;height: 25px; font-size:12px; padding:0px;">
+                           
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>角色描述：</td>
+                    <td colspan="3"><textarea id="describe" name="describe" rows="2" cols="40" style="height:60px;font-size:12px;"></textarea></td>
+                </tr>
+               <tr class="spa"></tr>
+                <tr>
+                    <td align="right" colspan="4" id="operator"><button class="fa fa-save btn btn-default" id="save">&nbsp; 保存</button>&nbsp;&nbsp;&nbsp;<button class="fa fa-close btn btn-danger" id="close">&nbsp; 关闭</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(function () {
+            $("#levelList").datagrid({
+                url: '/SystemUser/GetLevelList',
+                methord: 'post',
+                width: SetGridWidthSub(30),
+                height: SetGridHeightSub(60),
+                fitColumns: true,
+                sortName: 'time',
+                sortOrder: 'desc',
+                idField: 'id',
+                pageSize: 10,
+                pageList: [5, 10, 15, 20],
+                pagination: true,
+                rownumbers: false,
+                striped: true,
+                singleSelect: true,
+                columns: [[
+                            { field: 'id', title: '编号', width: 20 },
+                            { field: 'name', title: '角色名称', width: 30 },
+                            {
+                                field: 'self', title: '角色属性', width: 30, align: 'center', formatter: function (value) {
+                                    return value ? '<span class="label label-info">内部角色</span>' : '<span class="label label-success">外部角色</span>';
+                                }
+                            },
+                            { field: 'describe', title: '角色描述', width: 80 },
+                            {
+                                field: 'time', title: '修改时间', width: 40, formatter: function (value) {
+                                    return new Date(Number.parseInt(value.match(/\d+/g)[0])).Format("yyyy年MM月dd日 hh:mm:ss")
+                                }
+                            }
+                ]]
+            });
+            datagridResize('#levelList', 30, 60);
+
+            $("#Create").click(function () {
+                clearWindows();
+                $("#modalwindow").window({
+                    title: "创建角色",
+                    iconCls: "fa fa-plus"
+                }).window('open');
+
+            })
+
+            $("#Edit").click(function () {
+                var row = getSelectRow("#levelList");
+                if (row == null)
+                    return
+                clearWindows();
+                $("#id").val(row.id);
+                $("#name").val(row.name);
+                $("#self").val(row.self + "");
+                showOrHidden(row.self)
+                $("#price").val(row.priceLevel + "");
+
+                $("#describe").val(row.describe);
+                $("#modalwindow").window({
+                    title: "编辑角色",
+                    iconCls: "fa fa-pencil"
+                }).window('open');
+            })
+
+            $("#Delete").click(function () {
+                var row = getSelectRow("#levelList");
+                if (row == null)
+                    return
+                $.post("/SystemUser/DeleteLevel", { id: row.id }, function (data) {
+                    if (data.result) {
+                        showTip("删除成功!", 2000);
+                        datagridReload("#levelList");
+                        $("#levelList").datagrid('unselectAll');
+                    }
+                    else
+                        showTip("删除失败!", 3000);
+                })
+            })
+
+            $("#Detail").click(function () {
+                var row = getSelectRow("#levelList");
+                if (row == null)
+                    return
+                clearWindows();
+                $("#id").val(row.id)
+                $("#name").val(row.name).attr("readonly", "readonly");
+                $("#describe").val(row.describe).attr("readonly", "readonly");
+                $("#self").val(row.self + "").attr("disabled", "disabled");
+                $("#price").val(row.priceLevel + "").attr("disabled", "disabled");
+                $("#operator").css("visibility", "hidden");
+                $("#modalwindow").window({
+                    title: "角色详情",
+                    iconCls: "fa fa-info"
+                }).window('open');
+            })
+
+            getPriceLevel();
+
+
+          
+
+            $("#self").change(function () {
+                showOrHidden($(this).val()=="true")
+            })
+
+
+            $("#save").click(function () {
+                if (emptyFocus("#name"))
+                    return
+                if (emptyFocus("#self"))
+                    return
+                if ($("#self").val() == "false") {
+                    if (emptyFocus("#price"))
+                        return
+                }
+                $.post("/SystemUser/EditLevel", { id: $("#id").val(), name: $("#name").val(), describe: $("#describe").val(), self: $("#self").val() ,priceLevel:$("#price").val()}, function (data) {
+                    if (data.result) {
+                        $("#modalwindow").window("close");
+                        showTip("修改成功", 2000)
+                        datagridReload("#levelList");;
+                    }
+                })
+            })
+
+            $("#close").click(function () {
+                $("#modalwindow").window("close");
+            })
+
+            function clearWindows() {
+                $("#id").val("")
+                $("#name").val("").removeAttr("readonly")
+                $("#describe").val("").removeAttr("readonly")
+                $("#name").removeClass("input-validation-error")
+                $("select").val("").removeClass("input-validation-error")
+                $("select").val("").removeAttr("disabled");
+                $("#operator").css("visibility", "visible");
+                clearErrState("#name")
+                clearErrState("#self")
+                clearErrState("#price")
+            }
+
+        })
+
+        function searchInfo(query, condition) {
+            $("#levelList").datagrid('load', { condition, query})
+            }
+
+        function refreshPage() {
+            datagridReload("#levelList");
+        }
+
+        function getPriceLevel() {
+            $.post("/SystemUser/GetPriceCount", function (data) {
+                packageData(data)
+            })
+        }
+
+        function packageData(data) {
+            var html = "";
+            for (var i = 1; i <= data; i++) {
+                html += `<option value="${i}">${i}级售价</option>`
+            }
+            $("#price").html(html);
+        }
+
+        function showOrHidden(state) {
+            state ?  $(".autoAdd").hide():$(".autoAdd").show()
+        }
+    </script>
+}

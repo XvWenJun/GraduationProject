@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "ShowQutationInfo";
+}
+@section styles{
+}
+
+<div style="padding:10px;">
+    <div id="toolbar" style="height:40px;">
+        <input id="search" class="easyui-searchbox" data-options="searcher:searchInfo,prompt:'请输入搜索内容',menu:'#searchMenu',width:300,height:30" />
+        <div id="searchMenu">
+            <div data-options="name:'id'">搜索订单号</div>
+            <div data-options="name:'state'">搜索订单状态</div>
+            <div data-options="name:'agentName'">搜索代理商</div>
+            <div data-options="name:'staffName'">搜索审核人</div>
+        </div>
+
+        <input class="easyui-datebox" type="text" id="date" style="height:29px;width:100px;" />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        @MvcHtmlString.Create(ViewBag.duties)
+    </div>
+    <table id="orderList" class="easyui-datagrid"></table>
+</div>
+
+<div id="modalwindow" class="easyui-window" data-options="closed:true,minimizable:false"></div>
+
+@section scripts{
+    <script src="~/MyScripts/showQuotaionInfo.js"></script>
+}

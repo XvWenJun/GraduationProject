@@ -1,0 +1,171 @@
+﻿@model QuotationSystem.DAL.Common.ProductFullInfo
+@{
+    ViewBag.Title = "ShowProductInfo";
+    string imageScr = Model.product.img ?? @"/Content/images/nopic.gif";
+    int level = ViewBag.priceLevel;
+}
+
+@section styles{
+    <style>
+        .formtable th {
+            height: 40px;
+        }
+
+        .formtable tr {
+            height: 25px;
+        }
+
+        u {
+            font-size: 15px;
+        }
+    </style>
+}
+
+<div style="width:700px;padding:30px;">
+    <form>
+
+        <input id="id" name="id" type="hidden" value="@Model.product.id" />
+        <input id="category" type="hidden" value="@Model.product.category" />
+        <table class="formtable">
+            <tbody>
+                <tr>
+                    <td colspan="6">
+                        <div class="custom-panel" style="margin-bottom:10px;">
+                            <label class="fa fa-cube fa-lg custom-panel-icon"></label>
+                            <span class="custom-panel-title">产品基本信息</span>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th style="font-size:15px;width:100px">
+                        产品名字：
+                    </th>
+                    <td style="width:180px">
+                        <u>@Model.product.name</u>
+                    </td>
+                    <th style="width:110px; font-size:16px;">
+                        产品类别：
+                    </th>
+                    <td>
+                        <u>@ViewBag.categoryText</u>
+                    </td>
+                    <th>
+                        &nbsp;
+                    </th>
+                    <td>
+                        &nbsp;
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+
+        <table class="formtable">
+            <tbody>
+                <tr>
+                    <td colspan="7">
+                        <div class="custom-panel" style="margin-bottom:10px;">
+                            <label class="fa fa-cubes fa-lg custom-panel-icon"></label>
+                            <span class="custom-panel-title">产品详细信息</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th style="font-size:12px; width:100px">
+                        单位：
+                    </th>
+                    <td>
+                        <u> @Model.product.unit</u>
+                    </td>
+
+                    @if (level > 0)
+                    {
+                        <th style="font-size:12px;">
+                            售价：
+                        </th>
+                        <td colspan="3">
+                            <u>@Model.prices[level-1]</u>
+                        </td>
+                    }
+                    else
+                    {
+                        <th style="font-size:12px;">
+                            成本：
+                        </th>
+                        <td colspan="3">
+                            <u>  @Model.product.cost</u>
+                        </td>
+                    }
+
+                    <td rowspan="4" style="border-left:dashed 1px #ccc; text-align:center">
+                        <div>
+                            <img style="cursor:pointer; width:140px; height:140px;" class="img-thumbnail" id="avatar" src="@imageScr">
+                            <br /><br />
+                        </div>
+                    </td>
+                </tr>
+                @if (level <= 0)
+                {
+
+                    for (int i = 0; i < Math.Ceiling((double)Model.prices.Length / 3); i++)
+                {
+                        <tr>
+                            @for (int j = 0; j < 3; j++)
+                            {
+                                if (i * 3 + j >= Model.prices.Length)
+                                {
+                                    break;
+                                }
+
+                                <th style="font-size:12px;">
+                                    @(i * 3 + j + 1)级售价：
+                                </th>
+                                <td>
+                                    <u>  @Model.prices[i * 3 + j] ￥</u>
+                                </td>
+
+                            }
+                        </tr>
+
+                    }
+
+                }
+                <tr>
+                    <th style="font-size:12px;">
+                        详细信息：
+                    </th>
+                    <td colspan="5">
+                        <u>  @Model.product.describe</u>
+                    </td>
+                </tr>
+                @if (level >= 0)
+                {
+                    <tr>
+                        <th style="font-size:12px;">
+                        </th>
+                        <td></td>
+                        <th style="font-size:12px;">
+                        </th>
+                        <td></td>
+                        <th style="font-size:12px;">
+                        </th>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <th style="font-size:12px;">
+                        </th>
+                        <td></td>
+                        <th style="font-size:12px;">
+                        </th>
+                        <td></td>
+                        <th style="font-size:12px;">
+                        </th>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+</div>
